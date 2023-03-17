@@ -150,10 +150,36 @@ class Synonyms:
         except:
             print("Wystąpił błąd")
 
+/////////Menu/////////
 
-synonyms = Synonyms("")  # należy podać ścieżkę do pliku, w którym chcemy dokonać zmian
-synonyms.open_file()
-synonyms.show_statistics() # metoda pokazująca statystyki
-# synonyms.save_as_docx(synonyms.change_my_choice(["co"]), "na_co") #metoda zamieniająca w tekście podane słowa
-# synonyms.save_as_docx(synonyms.change_all(), "zmiany")  # metoda zamieniająca w tekście wszystkie powtarzające się słowa
+path = input("Podaj ścieżkę do pliku docx: ")
 
+synonyms = Synonyms(path)
+
+while True:
+    print("1. Zmiana wybranych słów.")
+    print("2. Zmiana wszystkich słów.")
+    print("3. Pokaż statystyki.")
+    print("4. Wyjdź.")
+
+    choice = input("Wybierz: ")
+
+    if choice == "1":
+        my_choice = input("Podaj słowo, które chcesz zmienić: ")
+        result = synonyms.change_my_choice([my_choice])
+        file_name = input("Podaj nazwę pliku docx do zapisania: ")
+        synonyms.save_as_docx(result,file_name)
+
+    elif choice == "2":
+        my_list = input("Podaj słowa, które chcesz zachować (oddzielone przecinkami): ").split(",")
+        file_name = input("Podaj nazwę pliku docx do zapisania: ")
+        synonyms.save_as_docx(synonyms.change_all(my_list), file_name)
+
+    elif choice == "3":
+        synonyms.show_statistics()
+
+    elif choice == "4":
+        break
+
+    else:
+        print("Nieprawidłowa opcja. Spróbuj ponownie.")
